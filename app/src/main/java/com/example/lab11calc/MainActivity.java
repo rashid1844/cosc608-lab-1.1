@@ -5,6 +5,7 @@ package com.example.lab11calc;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 
@@ -20,12 +21,15 @@ import expr.Expr;
 import expr.Parser;
 import expr.SyntaxException;
 
+import static expr.Parser.*;
+
 
 public class MainActivity extends AppCompatActivity {
 
 
 
   private TextView output;
+  private   Expr expr;
 
 
 
@@ -187,27 +191,24 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
         equal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
 
-Expr expr = null;
-
-                
-
                 try {
-                    expr = Parser.parse(output.toString());
+                    expr = Parser.parse(output.getText().toString());
+
+
+                    String convi = String.valueOf(expr.value()); //convert double to string
+
+                    output.setText(convi);
+
                 } catch (SyntaxException e) {
                     e.printStackTrace();
                 }
 
-
-
-                
-                output.setText((int) expr.value());
 
 
 
